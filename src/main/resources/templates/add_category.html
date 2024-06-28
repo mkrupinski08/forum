@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>add category</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Forum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('admin')" th:href="@{/user}" th:text="Users">Users</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('limited')" th:href="@{/shared/{username}(username=${#authentication.getPrincipal().getUsername()})}" th:text="Shared">Shared</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('full')" th:href="@{/note/{username}(username=${#authentication.getPrincipal().getUsername()})}" th:text="Notes">Notes</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('full')" th:href="@{/note/add}" th:text="Add_note">Add note</a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('admin')" th:href="@{/category}" th:text="Categories">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/user}">My account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Create category</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" role="form" th:action="@{/category/add}" th:object="${categoryRequestDto}">
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control"
+                               id="name"
+                               name="name"
+                               placeholder="Enter name"
+                               th:field="*{name}"
+                               type="text"
+                        />
+                        <p th:errors="*{name}" class="text-danger"
+                           th:if="${#fields.hasErrors('name')}">
+                            error
+                        </p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Description</label>
+                        <input class="form-control"
+                               id="description"
+                               name="description"
+                               placeholder="Enter description"
+                               th:field="*{description}"
+                               type="text"
+                        />
+                        <p th:errors="*{description}" class="text-danger"
+                           th:if="${#fields.hasErrors('description')}">
+                            error
+                        </p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

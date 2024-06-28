@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: ${FORUM_DB_URL}
+    username: ${FORUM_DB_USERNAME}
+    password: ${FORUM_DB_PASSWORD}
+  application:
+    name: forum
+  jpa:
+    hibernate:
+      ddl-auto: validate
+server:
+  port: ${FORUM_SERVER_PORT}
+  servlet:
+    context-path: /api/v1
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+    diskspace:
+      enabled: true

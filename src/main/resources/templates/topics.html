@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>topics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Forum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('admin')" th:href="@{/user}" th:text="Users">Users</a>
+                </li>
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('limited')" th:href="@{/shared/{username}(username=${#authentication.getPrincipal().getUsername()})}" th:text="Shared">Shared</a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('full')" th:href="@{/note/{username}(username=${#authentication.getPrincipal().getUsername()})}" th:text="Notes">Notes</a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('full')" th:href="@{/note/add}" th:text="Add_note">Add note</a>-->
+                <!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" sec:authorize="hasRole('admin')" th:href="@{/category/add}" th:text="Add_category">Add category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/user}">My account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <h1> Topics </h1>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>User</th>
+            <th>Created</th>
+            <th>Posts</th>
+            <th>Read</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="topic: ${topics}">
+            <td th:text="${topic.title}"></td>
+            <td th:text="${topic.user}"></td>
+            <td th:text="${#temporals.format(topic.created, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${topic.cnt}"></td>
+            <td><a th:href="@{/topic/{id}(id=${topic.id})}" th:text="'See topic'"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

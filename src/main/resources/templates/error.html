@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>error</title>
+</head>
+<body>
+<h1>Error</h1>
+<p th:text="${errorMsg}">Not found</p>
+<button onclick="history.back()" th:text="back">Go back</button>
+</body>
+</html>
