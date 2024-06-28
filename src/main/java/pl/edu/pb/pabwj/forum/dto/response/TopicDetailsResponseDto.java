@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class TopicDetailsResponseDto {
 
+    private Long id;
     private String title;
     private Set<PostResponseDto> postResponseDtoSet;
 

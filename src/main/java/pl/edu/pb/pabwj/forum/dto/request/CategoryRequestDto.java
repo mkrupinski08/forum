@@ -18,6 +18,7 @@ public class CategoryRequestDto {
     @Size(message = "Should has size between 3 and 20 characters", min = 3, max = 20)
     @Pattern(message = "Should only has lowercase letters", regexp = "[a-z]+")
     private String name;
+    @NotEmpty(message = "Should not be empty")
     private String description;
 
 

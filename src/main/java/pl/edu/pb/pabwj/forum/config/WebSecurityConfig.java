@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                         .hasRole("full")
                         .requestMatchers("/home")
                         .hasAnyRole("limited", "admin", "full")
-                        .requestMatchers("/note/**")
+                        .requestMatchers("/post/**")
                         .hasRole("full")
                         .requestMatchers("/category/**")
                         .hasRole("admin")

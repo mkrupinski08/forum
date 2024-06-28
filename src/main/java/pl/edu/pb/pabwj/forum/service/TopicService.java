@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import pl.edu.pb.pabwj.forum.dto.request.TopicRequestDto;
+import pl.edu.pb.pabwj.forum.dto.response.PostResponseDto;
 import pl.edu.pb.pabwj.forum.dto.response.TopicDetailsResponseDto;
 import pl.edu.pb.pabwj.forum.dto.response.TopicListResponseDto;
 import pl.edu.pb.pabwj.forum.mapper.TopicMapper;
@@ -16,7 +17,10 @@ import pl.edu.pb.pabwj.forum.repository.UserAccountRepository;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -61,9 +65,15 @@ public class TopicService {
     }
 
     public TopicDetailsResponseDto findById(Long id) {
-        return topicMapper.fromEntityToDetailsResponse(
+        TopicDetailsResponseDto topicDetailsResponseDto = topicMapper.fromEntityToDetailsResponse(
                 topicRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException(String.format("Topic with id %d not found", id))));
+        Set<PostResponseDto> sorted = topicDetailsResponseDto.getPostResponseDtoSet()
+                .stream()
+                .sorted(Comparator.comparing(PostResponseDto::getCreated))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        topicDetailsResponseDto.setPostResponseDtoSet(sorted);
+        return topicDetailsResponseDto;
     }
 
 }
